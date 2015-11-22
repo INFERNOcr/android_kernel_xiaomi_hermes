@@ -375,7 +375,8 @@ KBUILD_CFLAGS   := -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
 		   -Wno-format-security \
 		   -fno-delete-null-pointer-checks \
 		   -std=gnu89 -Werror=format \
-		   -Werror=int-to-pointer-cast -Werror=pointer-to-int-cast
+		   -Werror=int-to-pointer-cast -Werror=pointer-to-int-cast \
+                   -mtune=cortex-a53 -march=armv8-a
 
 KBUILD_AFLAGS_KERNEL :=
 KBUILD_CFLAGS_KERNEL :=
