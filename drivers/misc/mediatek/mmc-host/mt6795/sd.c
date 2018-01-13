@@ -6070,7 +6070,7 @@ static int msdc_do_request(struct mmc_host *mmc, struct mmc_request *mrq)
 			/* init_completion(&host->xfer_done); */
 			msdc_dma_setup(host, &host->dma, data->sg, data->sg_len);
 			msdc_dma_start(host);
-#ifndef FPGA_PLATFORM
+#ifdef STO_LOG
 			if (unlikely(dumpMSDC()))
 				AddStorageTrace(STORAGE_LOGGER_MSG_MSDC_DO, msdc_do_request,
 						"msdc_dma_start", host->xfer_size);
@@ -6081,7 +6081,7 @@ static int msdc_do_request(struct mmc_host *mmc, struct mmc_request *mrq)
 					cmd->opcode, cmd->arg, data->blocks * data->blksz);
 
 				host->sw_timeout++;
-#ifndef FPGA_PLATFORM
+#ifdef STO_LOG
 				if (unlikely(dumpMSDC()))
 					AddStorageTrace(STORAGE_LOGGER_MSG_MSDC_DO, msdc_do_request,
 							"msdc_dma ERR", host->xfer_size);
@@ -6118,7 +6118,7 @@ static int msdc_do_request(struct mmc_host *mmc, struct mmc_request *mrq)
 			if ((host->id == 0) && is_top_reset)
 				msdc_top_reset(host);
 #endif
-#ifndef FPGA_PLATFORM
+#ifdef STO_LOG
 			if (unlikely(dumpMSDC()))
 				AddStorageTrace(STORAGE_LOGGER_MSG_MSDC_DO, msdc_do_request,
 						"msdc_dma_stop");
@@ -7151,7 +7151,7 @@ int msdc_tune_cmdrsp(struct msdc_host *host)
 	sdr_get_field(MSDC_PATCH_BIT0, MSDC_PB0_INT_DAT_LATCH_CK_SEL, orig_dl_cksel);
 	sdr_get_field(MSDC_CFG, MSDC_CFG_CKMOD, clkmode);
 	hs400 = (clkmode == 3) ? 1 : 0;
-#ifndef FPGA_PLATFORM
+#ifdef STO_LOG
 	if (unlikely(dumpMSDC())) {
 		AddStorageTrace(STORAGE_LOGGER_MSG_MSDC_DO, msdc_do_request, "sd_tune_ori RSPL",
 				orig_rsmpl);
@@ -7229,7 +7229,7 @@ int msdc_tune_cmdrsp(struct msdc_host *host)
 	sdr_get_field(MSDC_PATCH_BIT0, MSDC_PB0_INT_DAT_LATCH_CK_SEL, orig_dl_cksel);
 	INIT_MSG("TUNE_CMD: rsmpl<%d> rrdly<%d> cmdrtc<%d> dl_cksel<%d> sfreq.<%d>", orig_rsmpl,
 		 orig_rrdly, orig_cmdrtc, orig_dl_cksel, host->sclk);
-#ifndef FPGA_PLATFORM
+#ifdef STO_LOG
 	if (unlikely(dumpMSDC())) {
 		AddStorageTrace(STORAGE_LOGGER_MSG_MSDC_DO, msdc_do_request, "sd_tune_ok RSPL",
 				orig_rsmpl);
@@ -11385,7 +11385,7 @@ static int __init mt_msdc_init(void)
 	msdc_ottest_proc_init();
 #endif
 
-	msdc_debug_proc_init();
+	//msdc_debug_proc_init();
 	msdc_init_dma_latest_address();
 	return 0;
 }
