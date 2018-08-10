@@ -134,3 +134,40 @@ config MTK_COMBO_GPS
 	depends on MTK_COMBO
 	help
 	  MTK GPS /dev/stpgps driver
+
+config MTK_COMBO_WIFI
+	tristate "MediaTek combo chip Wi-Fi support"
+	depends on MTK_COMBO
+	depends on !mt592x
+	select WIRELESS_EXT
+	select WEXT_PRIV
+
+config MTK_WAPI_SUPPORT
+	bool "MTK_WAPI_SUPPORT"
+	help
+	  if it is set to TRUE: Support WAPI (WLAN Authentication and
+	  Privacy Infrastructure)
+
+config MTK_PASSPOINT_R1_SUPPORT
+	bool "MTK_PASSPOINT_R1_SUPPORT"
+	help
+	  Support Passpoint R1 (Hotspot 2.0 R1)
+
+config MTK_PASSPOINT_R2_SUPPORT
+	bool "MTK_PASSPOINT_R2_SUPPORT"
+	help
+	   Support Passpoint R2
+
+config MTK_WIFI_MCC_SUPPORT
+	bool "MTK_WIFI_MCC_SUPPORT"
+	default y
+	help
+	   if it is set to TRUE, wlan will support Multi-Channel Concurrency,
+	   otherwise, only support Single Channel Concurrency
+
+config MTK_CONN_LTE_IDC_SUPPORT
+	bool "MediaTek CONN LTE IDC support"
+	select MTK_CONN_MD
+	default y
+	help
+	   This option enables CONN LTE IDC support
